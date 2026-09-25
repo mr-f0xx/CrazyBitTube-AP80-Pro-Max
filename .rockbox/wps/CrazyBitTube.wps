@@ -1,0 +1,254 @@
+# CrazyBit Tube Edition - WPS for HIDIZS AP80 Pro Max (360x640 portrait)
+# Full-screen Vacuum Tube Amber Layout with Cover Art & Touch Transport Buttons
+# Colors: #FF4D00 on #210000 panels, #000000 background
+# CC-BY-SA
+
+# Disable Status Bar and Clear Backdrop
+%wd
+%X(d)
+
+# Preload Fonts from repository
+%Fl(2,47-SquareDotCombined.fnt)
+%Fl(3,14-LanaPixel.fnt)
+%Fl(4,07-LanaPixel.fnt)
+%Fl(5,21-LanaPixel.fnt)
+%Fl(6,20-digital7mono.fnt)
+%Fl(7,28-LanaPixel.fnt)
+
+# Preload Bitmaps
+%xl(battery,battery.bmp,0,0,10)
+%xl(playmodes,playmodes.bmp,0,0,9)
+%xl(pbbd,progressbar_backdrop.bmp,0,0)
+%xl(pl,pl.bmp,0,0)
+%xl(plbg,plbg.bmp,0,0)
+%xl(pr,pr.bmp,0,0)
+%xl(prbg,prbg.bmp,0,0)
+%xl(volbg,volbg.bmp,0,0)
+%xl(vol,vol.bmp,0,0)
+%xl(btn_prev,btn_prev.bmp,0,0)
+%xl(btn_play,btn_play.bmp,0,0)
+%xl(btn_pause,btn_pause.bmp,0,0)
+%xl(btn_next,btn_next.bmp,0,0)
+%xl(nocover,no_cover.bmp,0,0)
+
+# Screen Mode Selection: Lockscreen vs Normal Playback
+%V(0,0,-,-,-)
+%?mh<%Vd(lockscreen)|%Vd(main)>
+
+###########################################################
+##### SECTION A: ACTIVE PLAYBACK SCREEN (360x640)     #####
+###########################################################
+
+# Global screen canvas (pure black #000000)
+%Vl(main,0,0,360,640,-)%Vf(FF4D00)%Vb(000000)
+
+# ========================================================
+# PANEL 1: TOP STATUS HEADER (y=8..46, h=38)
+# ========================================================
+%Vl(main,10,8,340,38,-)%Vf(FF4D00)%Vb(210000)
+
+# Playmode Icon
+%Vl(main,20,18,16,16,-)%Vf(FF4D00)%Vb(210000)
+%xd(playmodes,%mp)
+
+# Playlist Track Position (e.g. 19 of 9999)
+%Vl(main,42,18,100,16,4)%Vf(FF4D00)%Vb(210000)
+%al%pp of %pe
+
+# Real-Time Clock (24-hour HH:MM, no AM/PM) - centered in the status bar.
+# Font 3 (14-LanaPixel, 2x the other header text): 14px digits, ink x centred on 179.5 (screen centre)
+# and ink y=20..33 = vertically centred in the header panel (y=8..45).
+%Vl(main,151,13,60,28,3)%Vf(FF4D00)%Vb(210000)
+%ac%?cc<%cH:%cM|>
+
+# Battery Gauge (10-level icon + percentage)
+%Vl(main,296,20,23,10,-)%Vf(FF4D00)%Vb(210000)
+%?if(%bl,>,90)<%xd(battery,10)|%?if(%bl,>,80)<%xd(battery,9)|%?if(%bl,>,70)<%xd(battery,8)|%?if(%bl,>,60)<%xd(battery,7)|%?if(%bl,>,50)<%xd(battery,6)|%?if(%bl,>,40)<%xd(battery,5)|%?if(%bl,>,30)<%xd(battery,4)|%?if(%bl,>,20)<%xd(battery,3)|%?if(%bl,>,10)<%xd(battery,2)|%?if(%bl,>,-1)<%xd(battery,1)>>>>>>>>>>
+
+%Vl(main,322,18,22,14,4)%Vf(FF4D00)%Vb(210000)
+%ar%bl%%
+
+# ========================================================
+# PANEL 2: COVER ART / ALBUM ARTWORK (y=52..272, h=220)
+# ========================================================
+%Vl(main,10,52,340,220,-)%Vf(FF4D00)%Vb(210000)
+
+# Album Art Display with Fallback Vacuum Tube Art (210x210 centered in Panel 2)
+%Vl(main,75,57,210,210,-)%Vf(FF4D00)%Vb(210000)
+%Cl(0,0,210,210,c,c)
+%?C<%Cd|%xd(nocover)>
+
+# ========================================================
+# PANEL 3: TRACK METADATA & BADGES (y=278..372, h=94)
+# ========================================================
+%Vl(main,10,278,340,94,-)%Vf(FF4D00)%Vb(210000)
+
+# Artist Name
+%Vl(main,20,282,200,24,3)%Vf(FF4D00)%Vb(210000)
+%al%s%ia
+
+# Inverted Audio Codec Pill
+%Vl(main,224,284,54,16,6)%Vf(FF4D00)%Vb(210000)
+%ac%?fc<MP1|MP2|MP3|AIFF|WAV|VORBIS|FLAC|MPC|AC3|WAVPAC|ALAC|AAC|SHORTEN|SID|ADX|NSF|SPEEX|SPC|APE|WMA|WMAPRO|MOD|SAP|COOK|AAC|AC3|ATRAC3|CMC|CM3|CMR|CMS|DMC|DLT|MPT|MPD|RMT|TMC|TM8|TM2|ATRAC3|SMAF|AU|VOX|WAVE64|TRUEAUD|WMAVOX|MUSEPAK|AAC-HE|AY|VTX|GBS|HES|SGC|VGM|KSS|OPUS|AAC|RAW?>%Vs(invert)
+
+# Inverted Bitrate Pill
+%Vl(main,282,284,58,16,6)%Vf(FF4D00)%Vb(210000)
+%ac%fbk%Vs(invert)
+
+# Track Title (Big Dot Matrix Nixie 47-SquareDotCombined)
+%Vl(main,20,308,320,42,2)%Vf(FF4D00)%Vb(210000)
+%al%s%it
+
+# Album Name and Year
+%Vl(main,20,352,200,16,4)%Vf(FF4D00)%Vb(210000)
+%al%s%id %(%ss(0,4, %iy)%)
+
+# Shuffle & Repeat Status
+%Vl(main,220,352,120,16,4)%Vf(FF4D00)%Vb(210000)
+%ar%?ps<SHUF >%?mm<|REPEAT ALL|REPEAT ONE|REPEAT SFL|REPEAT A-B>
+
+# ========================================================
+# PANEL 4: DYNAMIC PEAK METERS / AUTO-HIDING VOLUME (y=378..466, h=88)
+# Volume bar pops up for 2.5s on volume change, otherwise shows meters!
+# ========================================================
+%Vl(main,10,378,340,88,-)%Vf(FF4D00)%Vb(210000)
+
+%?mv(2.5)<%Vd(vol_popup)|%Vd(vu_view)>
+
+# --- Sub-view 1: Normal View with Stereo Butterfly VU Meters ---
+# Base clear to erase volume popup
+%Vl(vu_view,10,378,340,88,-)%Vf(FF4D00)%Vb(210000)
+%dr(0,0,-,-,210000)
+
+%Vl(vu_view,20,382,155,14,4)%Vf(FF4D00)%Vb(210000)
+%alVACUUM TUBE VU
+
+%Vl(vu_view,185,382,155,14,4)%Vf(FF4D00)%Vb(210000)
+%ar-dB 30 20 12 6 3 0 +3
+
+# Left VU Meter (slopes up outward to left)
+%Vl(vu_view,20,398,155,48,-)%Vf(FF4D00)%Vb(210000)
+%pL(0,0,155,48,image,pl,backdrop,plbg,invert)
+
+# Right VU Meter (slopes up outward to right)
+%Vl(vu_view,185,398,155,48,-)%Vf(FF4D00)%Vb(210000)
+%pR(0,0,155,48,image,pr,backdrop,prbg)
+
+%Vl(vu_view,20,450,155,14,4)%Vf(FF4D00)%Vb(210000)
+%al[ LEFT ]  -4.2dB
+
+%Vl(vu_view,185,450,155,14,4)%Vf(FF4D00)%Vb(210000)
+%ar-5.0dB  [ RIGHT ]
+
+# --- Sub-view 2: Volume Changing Popup (hidden when idle) ---
+# Base clear to erase VU meters (Panel 4)
+%Vl(vol_popup,10,378,340,88,-)%Vf(FF4D00)%Vb(210000)
+%dr(0,0,-,-,210000)
+
+# Volume readout: Full volume information (dB + %)
+%Vl(vol_popup,20,384,320,28,3)%Vf(FF4D00)%Vb(210000)
+%acVOLUME: %?if(%pv, >, 0)<+|>%pvdB  (%pv%%)
+
+# Volume graphic bar
+%Vl(vol_popup,20,416,320,14,-)%Vf(FF4D00)%Vb(210000)
+%pv(0,0,320,14,vol,backdrop,volbg)
+
+# Auto-hiding duration indicator
+%Vl(vol_popup,20,444,320,18,4)%Vf(FF4D00)%Vb(210000)
+%acAuto-hiding volume popup (2.5s)
+
+# ========================================================
+# PANEL 5: TACTILE CLICKABLE BUTTONS (y=472..538, h=66)
+# ========================================================
+%Vl(main,10,472,340,66,-)%Vf(FF4D00)%Vb(210000)
+
+# Previous Button [ |<< ]
+%Vl(main,35,483,80,44,-)%Vf(FF4D00)%Vb(210000)
+%xd(btn_prev)
+%T(0,0,-,-,prev)
+
+# Play/Pause Dynamic Button [ > / || ]
+# Rockbox %?mp tag: 1=Stop (play icon), 2=Play (play icon), 3=Pause (pause icon)
+%Vl(main,135,483,90,44,-)%Vf(FF4D00)%Vb(210000)
+%?mp<%xd(btn_play)|%xd(btn_play)|%xd(btn_pause)|%xd(btn_play)|%xd(btn_play)>
+%T(0,0,-,-,play)
+
+# Next Button [ >>| ]
+%Vl(main,245,483,80,44,-)%Vf(FF4D00)%Vb(210000)
+%xd(btn_next)
+%T(0,0,-,-,next)
+
+# ========================================================
+# PANEL 6: PROGRESS BAR & PLAYBACK TIME (y=544..632, h=88)
+# ========================================================
+%Vl(main,10,544,340,88,-)%Vf(FF4D00)%Vb(210000)
+
+# Time Elapsed (digital 7-segment)
+%Vl(main,20,552,50,16,6)%Vf(FF4D00)%Vb(210000)
+%al%pc
+
+# Progress Bar touch zone: tap or drag anywhere on the bar row to seek (34px tall finger target).
+# Same x-range as the bar (75..284) so the seek position matches the bar 1:1. Declared BEFORE the
+# bar so its background clear on a full redraw never paints over the bar.
+%Vl(main,75,544,210,34,-)%Vf(FF4D00)%Vb(210000)
+%T(0,0,210,34,progressbar)
+
+# Progress Bar with authentic dithered dot backdrop (drawing only - touch handled by the zone above)
+%Vl(main,75,554,210,12,-)%Vf(FF4D00)%Vb(210000)
+%pb(0,0,210,12,progressbar.bmp,backdrop,pbbd,notouch)
+
+# Total Track Time (digital 7-segment)
+%Vl(main,290,552,50,16,6)%Vf(FF4D00)%Vb(210000)
+%ar%pt
+
+# Up Next Track Preview & Remaining Time
+%Vl(main,20,580,210,16,4)%Vf(FF4D00)%Vb(210000)
+%alUP NEXT: %?It<%It - %Ia|End of Playlist>
+
+%Vl(main,230,580,110,16,4)%Vf(FF4D00)%Vb(210000)
+%ar-%pr REMAINING
+
+# Audio Stream Specs
+%Vl(main,20,606,320,16,4)%Vf(FF4D00)%Vb(210000)
+%ac%fk kHz • %?fv<VBR|CBR> • REPLAYGAIN %?rg<ON|OFF>
+
+
+###########################################################
+##### SECTION B: LOCKED SCREEN MODE (360x640)         #####
+###########################################################
+
+%Vl(lockscreen,0,0,360,640,-)%Vf(FF4D00)%Vb(000000)
+
+# Header Panel with Large Inverted LOCKED banner
+%Vl(lockscreen,10,10,340,50,-)%Vf(FF4D00)%Vb(210000)
+%Vl(lockscreen,20,18,320,34,3)%Vf(FF4D00)%Vb(210000)
+%acLOCKED%Vs(invert)
+
+# Battery & Power Panel
+%Vl(lockscreen,10,68,340,110,-)%Vf(FF4D00)%Vb(210000)
+%Vl(lockscreen,20,80,320,60,7)%Vf(FF4D00)%Vb(210000)
+%ac%bl%%
+%Vl(lockscreen,20,148,320,18,4)%Vf(FF4D00)%Vb(210000)
+%ac%?bc<CHARGING BATTERY|ON BATTERY POWER>
+
+# Cover Art Slot on Lockscreen
+%Vl(lockscreen,10,186,340,220,-)%Vf(FF4D00)%Vb(210000)
+%Vl(lockscreen,75,191,210,210,-)%Vf(FF4D00)%Vb(210000)
+%Cl(0,0,210,210,c,c)
+%?C<%Cd|%xd(nocover)>
+
+# Metadata Panel
+%Vl(lockscreen,10,414,340,110,-)%Vf(FF4D00)%Vb(210000)
+%Vl(lockscreen,20,420,320,24,3)%Vf(FF4D00)%Vb(210000)
+%al%s%ia
+%Vl(lockscreen,20,446,320,42,2)%Vf(FF4D00)%Vb(210000)
+%al%s%it
+%Vl(lockscreen,20,494,320,20,4)%Vf(FF4D00)%Vb(210000)
+%al%s%id %(%ss(0,4, %iy)%)
+
+# Lock Instructions Panel
+%Vl(lockscreen,10,532,340,98,-)%Vf(FF4D00)%Vb(210000)
+%Vl(lockscreen,20,554,320,24,3)%Vf(FF4D00)%Vb(210000)
+%acHOLD SWITCH ENGAGED
+%Vl(lockscreen,20,586,320,18,4)%Vf(FF4D00)%Vb(210000)
+%acRelease Hold switch to resume controls
