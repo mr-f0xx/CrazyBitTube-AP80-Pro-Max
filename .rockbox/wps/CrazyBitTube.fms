@@ -1,0 +1,64 @@
+# CrazyBit Tube Edition - FM Radio for HIDIZS AP80 Pro Max (360x640 portrait)
+# CC-BY-SA
+
+# Disable Status Bar
+%wd
+%X(d)
+
+# Preload Fonts
+%Fl(2,47-SquareDotCombined.fnt)
+%Fl(3,14-LanaPixel.fnt)
+%Fl(4,07-LanaPixel.fnt)
+%Fl(5,21-LanaPixel.fnt)
+%Fl(6,20-digital7mono.fnt)
+
+# Preload Bitmaps
+%xl(battery,battery.bmp,0,0,10)
+%xl(playmodes,playmodes.bmp,0,0,9)
+%xl(volbg,volbg.bmp,0,0)
+%xl(vol,vol.bmp,0,0)
+
+# Fullscreen Canvas
+%V(0,0,360,640,-)%Vf(FFA020)%Vb(000000)
+
+# Top Status Row
+%V(20,14,16,16,-)
+%xd(playmodes,8)
+
+%V(46,14,244,18,4)
+%acFM RADIO TUNER
+
+%V(292,16,23,10,-)
+%?if(%bl,>,90)<%xd(battery,10)|%?if(%bl,>,80)<%xd(battery,9)|%?if(%bl,>,70)<%xd(battery,8)|%?if(%bl,>,60)<%xd(battery,7)|%?if(%bl,>,50)<%xd(battery,6)|%?if(%bl,>,40)<%xd(battery,5)|%?if(%bl,>,30)<%xd(battery,4)|%?if(%bl,>,20)<%xd(battery,3)|%?if(%bl,>,10)<%xd(battery,2)|%?if(%bl,>,-1)<%xd(battery,1)>>>>>>>>>>
+
+%V(318,13,22,14,4)
+%ar%bl%%
+
+%V(20,48,320,2,-)%Vf(522306)%Vb(522306)
+
+# Tuned Frequency (Huge 47-SquareDotCombined dot matrix display)
+%V(20,90,320,44,2)
+%ac%tf MHz
+
+# Preset Name / RDS Station Name
+%V(20,150,320,30,3)
+%ac%?Pt<%Pt|Manual Tuning>
+
+# Tuner Stereo / Mono indicator
+%V(20,200,320,20,3)
+%ac%?ts<[ STEREO ]|[ MONO ]>
+
+# Signal Strength
+%V(20,240,320,16,4)
+%acSIGNAL: %tr%%
+
+# Volume Section
+%V(20,320,320,18,3)
+%alVOLUME  %ac%?if(%pv, >, 0)<+|>%pvdB  %ar%pv%%
+
+%V(20,350,320,12,-)
+%pv(0,0,320,12,vol,backdrop,volbg)
+
+# Bottom Branding
+%V(20,600,320,16,4)
+%ac=== HIDIZS AP80 PRO MAX ===

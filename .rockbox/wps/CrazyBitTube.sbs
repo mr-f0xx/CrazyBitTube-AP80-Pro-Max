@@ -1,0 +1,98 @@
+# CrazyBit Tube Edition - SBS for HIDIZS AP80 Pro Max (360x640 portrait)
+# Full-screen Main Menu and Browser skin
+# Colors: #FF4D00 on #210000 panels, #000000 background
+# CC-BY-SA
+
+%wd
+
+%Fl(2,07-LanaPixel.fnt)
+%Fl(3,14-LanaPixel.fnt)
+%Fl(4,20-digital7mono.fnt)
+%Fl(5,19-LanaPixel.fnt)
+%Fl(6,28-LanaPixel.fnt)
+%Fl(7,47-SquareDotCombined.fnt)
+%Fl(8,14-CrazyBitTube-Battery.fnt)
+
+%xl(playmodes,playmodes.bmp,0,0,9)
+%xl(usb,usb.bmp,0,0)
+
+%?if(%cs, =, 21)<%VI(clearScreen)%Vd(usb)|%VI(menu)%Vd(info)>
+
+%Vi(clearScreen,0,0,1,1,-)
+
+###########################################################
+##### SECTION 1: MAIN MENU & SYSTEM UI (360x640)      #####
+###########################################################
+
+# Fullscreen Black Background
+%Vl(info,0,0,360,640,-)%Vf(FF4D00)%Vb(000000)
+
+# Main Menu List Viewport: takes up entire middle screen (x=10, y=66, w=340, h=496)
+%Vi(menu,10,66,340,496,-)%Vf(FF4D00)%Vb(210000)
+
+# --- TOP HEADER PANEL (y=8..60, h=52) ---
+%Vl(info,10,8,340,52,-)%Vf(FF4D00)%Vb(210000)
+
+# Header row is vertically centred on y=33.5, the exact middle of the header panel (y=8..59).
+# 24-hour clock on the left (font 3: 14-LanaPixel, digits on y=27..40, same baseline as the battery %) + hold indicator
+%Vl(info,20,20,90,26,3)%Vf(FF4D00)%Vb(210000)
+%al%?cc<%cH:%cM|>%?mh< [H]|>
+
+# Header Title exactly in the middle of the header (font 5: 19-LanaPixel, 19px caps, 3px strokes).
+# Viewport x=110..251 = all the room between the clock and battery viewports. "Rockbox" ink = x 132..227,
+# y 23..44 -> centre (179.5, 33.5) = centre of the header panel (x=10..349, y=8..59): 122px left/right, 15px above/below.
+%Vl(info,110,17,142,38,5)%Vf(FF4D00)%Vb(210000)
+%ac%Lt%s
+
+# Battery: 32x14 icon + percentage, right-aligned as one unit (font 8: 14-CrazyBitTube-Battery).
+# The % ink ends at x=339 = same 10px padding as the clock on the left; the icon is a font glyph
+# (U+E000..U+E009 = 10 charge levels) so it always stays one space (6px) left of the number.
+%Vl(info,252,20,90,26,8)%Vf(FF4D00)%Vb(210000)
+%ar%?if(%bl,>,90)<|%?if(%bl,>,80)<|%?if(%bl,>,70)<|%?if(%bl,>,60)<|%?if(%bl,>,50)<|%?if(%bl,>,40)<|%?if(%bl,>,30)<|%?if(%bl,>,20)<|%?if(%bl,>,10)<|%?if(%bl,>,-1)<>>>>>>>>>> %bl%%
+
+# --- BOTTOM MINI-PLAYER DOCK PANEL (y=568..632, h=64) ---
+%Vl(info,10,568,340,64,-)%Vf(FF4D00)%Vb(210000)
+
+%Vl(info,20,578,16,16,-)%Vf(FF4D00)%Vb(210000)
+%?if(%mp, >, 1)<%xd(playmodes,%mp)|>
+
+%Vl(info,44,574,296,26,3)%Vf(FF4D00)%Vb(210000)
+%?if(%mp, >, 1)<%al%s%it - %ia|%acHIDIZS AP80 PRO MAX>
+
+%Vl(info,44,604,196,16,2)%Vf(FF4D00)%Vb(210000)
+%?if(%mp, >, 1)<%al%s%id %(%ss(0,4, %iy)%)|%acCrazyBit Tube Edition>
+
+%Vl(info,244,604,96,16,4)%Vf(FF4D00)%Vb(210000)
+%?if(%mp, >, 1)<%ar%pc / %pt|>
+
+
+###########################################################
+##### SECTION 2: USB DISK MODE SCREEN (360x640)       #####
+###########################################################
+
+%Vl(usb,0,0,360,640,-)%Vf(FF4D00)%Vb(000000)
+
+%Vl(usb,10,12,340,48,-)%Vf(FF4D00)%Vb(210000)
+%Vl(usb,20,24,320,28,3)%Vf(FF4D00)%Vb(210000)
+%acUSB DISK MODE
+
+%Vl(usb,10,68,340,560,-)%Vf(FF4D00)%Vb(210000)
+
+# Center USB Illustration (260x130 at x=50, y=100)
+%Vl(usb,50,100,260,130,-)%Vf(FF4D00)%Vb(210000)
+%xd(usb)
+
+%Vl(usb,20,260,320,60,6)%Vf(FF4D00)%Vb(210000)
+%acUSB CONNECTED
+
+%Vl(usb,20,340,320,28,3)%Vf(FF4D00)%Vb(210000)
+%acEject Before Disconnecting
+
+%Vl(usb,20,390,320,20,3)%Vf(FF4D00)%Vb(210000)
+%acBattery: %bl%%  (%?bc<Charging|Discharging>)
+
+%Vl(usb,20,460,320,16,2)%Vf(FF4D00)%Vb(210000)
+%acDATA TRANSFER / MASS STORAGE ACTIVE
+
+%Vl(usb,20,580,320,16,2)%Vf(FF4D00)%Vb(210000)
+%ac=== HIDIZS AP80 PRO MAX ===
